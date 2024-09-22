@@ -40,14 +40,14 @@ app.post('/uploadContacts', async (req, res) => {
   try {
     const contacts = req.body.contacts;
     if (!contacts || contacts.length === 0) {
-      return res.status(400).send('No contacts provided');
+      return res.status(400).json({ status: 'error', message: 'No contacts provided' });
     }
 
     await User.insertMany(contacts);
-    res.status(201).send('Contacts uploaded successfully');
+    res.status(201).json({ status: 'success', message: 'Contacts uploaded successfully' });
   } catch (error) {
     console.error(error);
-    res.status(500).send('Error uploading contacts');
+    res.status(500).json({ status: 'error', message: 'Error uploading contacts' });
   }
 });
 
